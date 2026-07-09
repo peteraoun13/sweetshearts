@@ -29,7 +29,11 @@ export function ReferenceHero() {
       />
       <div className="reference-hero__shade" aria-hidden="true" />
       <motion.div className="reference-hero__content" {...copyMotion}>
-        <p className="reference-hero__script" id="reference-hero-title">Sweet Hearts</p>
+        <p className="reference-hero__script" id="reference-hero-title">
+          <span>Sweet</span>
+          {" "}
+          <span>Hearts</span>
+        </p>
         <Link className="reference-button reference-hero__button" to="/contact">
           Inquire Now
         </Link>

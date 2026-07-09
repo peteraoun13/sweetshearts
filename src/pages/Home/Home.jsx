@@ -31,7 +31,7 @@ export function Home() {
        <SignatureDesignGrid />
       <QuoteFeature />
       <StoryStatement />
-      <StoryImageStack />
+      
       <FAQAccordion />
 
     </div>
