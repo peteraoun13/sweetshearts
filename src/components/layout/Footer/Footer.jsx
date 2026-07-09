@@ -45,7 +45,7 @@ export function Footer() {
       </Container>
 
       <Container className="footer__bottom">
-        <p>Copyright {new Date().getFullYear()} {brand.name}. All rights reserved.</p>
+        <p>Copyrighht {new Date().getFullYear()} {brand.name}. All rights reserved.</p>
       </Container>
     </footer>
   );
