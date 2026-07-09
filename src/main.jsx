@@ -7,6 +7,7 @@ import "./styles/globals.css";
 import "./styles/layout.css";
 import "./styles/components.css";
 import "./styles/sections.css";
+import "./styles/home-reference.css";
 import "./styles/pages.css";
 import "./styles/forms.css";
 

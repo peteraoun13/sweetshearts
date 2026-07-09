@@ -1,12 +1,16 @@
 import { usePageTitle } from "../../hooks/usePageTitle.js";
-import { AboutPreview } from "../../sections/AboutPreview/AboutPreview.jsx";
-import { BrandStatement } from "../../sections/BrandStatement/BrandStatement.jsx";
-import { ContactCTA } from "../../sections/ContactCTA/ContactCTA.jsx";
-import { FeaturedCakes } from "../../sections/FeaturedCakes/FeaturedCakes.jsx";
-import { GalleryPreview } from "../../sections/GalleryPreview/GalleryPreview.jsx";
-import { HeroSection } from "../../sections/HeroSection/HeroSection.jsx";
-import { ServicesPreview } from "../../sections/ServicesPreview/ServicesPreview.jsx";
-import { TestimonialSection } from "../../sections/TestimonialSection/TestimonialSection.jsx";
+import { CuratedCollection } from "../../components/home/CuratedCollection/CuratedCollection.jsx";
+import { DesignFilterBar } from "../../components/home/DesignFilterBar/DesignFilterBar.jsx";
+import { FAQAccordion } from "../../components/home/FAQAccordion/FAQAccordion.jsx";
+import { IntroStatement } from "../../components/home/IntroStatement/IntroStatement.jsx";
+import { QuoteFeature } from "../../components/home/QuoteFeature/QuoteFeature.jsx";
+import { ReferenceHero } from "../../components/home/ReferenceHero/ReferenceHero.jsx";
+import { ServiceEditorialBlocks } from "../../components/home/ServiceEditorialBlocks/ServiceEditorialBlocks.jsx";
+import { SignatureDesignGrid } from "../../components/home/SignatureDesignGrid/SignatureDesignGrid.jsx";
+import { StoryImageStack } from "../../components/home/StoryImageStack/StoryImageStack.jsx";
+import { StoryStatement } from "../../components/home/StoryStatement/StoryStatement.jsx";
+import { StudioStory } from "../../components/home/StudioStory/StudioStory.jsx";
+import { WideImageFeature } from "../../components/home/WideImageFeature/WideImageFeature.jsx";
 
 export function Home() {
   usePageTitle(
@@ -15,15 +19,21 @@ export function Home() {
   );
 
   return (
-    <>
-      <HeroSection />
-      <AboutPreview />
-      <FeaturedCakes />
-      <ServicesPreview />
-      <BrandStatement />
-      <GalleryPreview />
-      <TestimonialSection />
-      <ContactCTA />
-    </>
+    <div className="reference-home">
+      <ReferenceHero />
+      <IntroStatement />
+      <ServiceEditorialBlocks />
+      <StudioStory />
+      <WideImageFeature />
+
+     
+      <CuratedCollection />
+       <SignatureDesignGrid />
+      <QuoteFeature />
+      <StoryStatement />
+      <StoryImageStack />
+      <FAQAccordion />
+
+    </div>
   );
 }

@@ -11,15 +11,19 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
-  const isTransparent = isHome && !isScrolled && !isMenuOpen;
+  const isTransparent = isHome && !isMenuOpen;
   const tone = "dark";
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      const heroHeight = document.querySelector(".reference-hero")?.clientHeight || 0;
+      const threshold = isHome && heroHeight ? heroHeight - 120 : 24;
+      setIsScrolled(window.scrollY > threshold);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isHome]);
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -30,6 +34,7 @@ export function Navbar() {
       className={[
         "navbar",
         isTransparent ? "navbar--transparent" : "navbar--solid",
+        isScrolled ? "navbar--scrolled" : "",
         isMenuOpen ? "navbar--menu-open" : "",
       ]
         .filter(Boolean)

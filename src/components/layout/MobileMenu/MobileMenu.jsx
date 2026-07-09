@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Instagram, Mail, MessageCircle, X } from "lucide-react";
 import { brand } from "../../../data/brand.js";
 import { navigationItems } from "../../../data/navigation.js";
@@ -9,8 +9,36 @@ import { Button } from "../../common/Button/Button.jsx";
 import { Logo } from "../../common/Logo/Logo.jsx";
 
 export function MobileMenu({ isOpen, onClose }) {
+  const panelRef = useRef(null);
   const closeButtonRef = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
   useLockBodyScroll(isOpen);
+
+  const overlayMotion = prefersReducedMotion
+    ? {
+        initial: { opacity: 1 },
+        animate: { opacity: 1 },
+        exit: { opacity: 1 },
+        transition: { duration: 0.01 },
+      }
+    : {
+        initial: { opacity: 0, clipPath: "inset(0 0 100% 0)" },
+        animate: { opacity: 1, clipPath: "inset(0 0 0% 0)" },
+        exit: { opacity: 0, clipPath: "inset(0 0 100% 0)" },
+        transition: { duration: 0.52, ease: [0.22, 1, 0.36, 1] },
+      };
+
+  const itemMotion = prefersReducedMotion
+    ? {
+        initial: { opacity: 1 },
+        animate: { opacity: 1 },
+        transition: { duration: 0.01 },
+      }
+    : {
+        initial: { opacity: 0, y: 18 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.48, ease: [0.22, 1, 0.36, 1] },
+      };
 
   useEffect(() => {
     if (!isOpen) {
@@ -22,6 +50,31 @@ export function MobileMenu({ isOpen, onClose }) {
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
         onClose();
+        return;
+      }
+
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const focusableElements = panelRef.current?.querySelectorAll(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      const focusable = [...(focusableElements || [])];
+
+      if (focusable.length === 0) {
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
 
@@ -38,17 +91,11 @@ export function MobileMenu({ isOpen, onClose }) {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          {...overlayMotion}
         >
           <motion.div
             className="mobile-menu__panel"
-            initial={{ y: -18, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -18, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            ref={panelRef}
           >
             <div className="mobile-menu__top">
               <Logo tone="dark" onClick={onClose} />
@@ -67,9 +114,11 @@ export function MobileMenu({ isOpen, onClose }) {
               {navigationItems.map((item, index) => (
                 <motion.div
                   key={item.to}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.38, delay: 0.08 + index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                  {...itemMotion}
+                  transition={{
+                    ...itemMotion.transition,
+                    delay: prefersReducedMotion ? 0 : 0.16 + index * 0.06,
+                  }}
                 >
                   <NavLink to={item.to} className="mobile-menu__link" onClick={onClose}>
                     <span>{String(index + 1).padStart(2, "0")}</span>
@@ -79,7 +128,14 @@ export function MobileMenu({ isOpen, onClose }) {
               ))}
             </nav>
 
-            <div className="mobile-menu__footer">
+            <motion.div
+              className="mobile-menu__footer"
+              {...itemMotion}
+              transition={{
+                ...itemMotion.transition,
+                delay: prefersReducedMotion ? 0 : 0.42,
+              }}
+            >
               <div>
                 <p>Sweet Hearts by Rimonda Nassar</p>
                 <Button to="/contact" variant="primary" icon={<ArrowRight size={18} />} onClick={onClose}>
@@ -97,7 +153,7 @@ export function MobileMenu({ isOpen, onClose }) {
                   <Mail size={19} aria-hidden="true" />
                 </a>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </motion.div>
       ) : null}
