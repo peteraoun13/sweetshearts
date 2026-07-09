@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { images } from "../../../data/images.js";
 
@@ -11,12 +10,12 @@ export function ReferenceHero() {
         animate: { opacity: 1, scale: 1 },
         transition: { duration: 1.15, ease: [0.22, 1, 0.36, 1] },
       };
-  const copyMotion = prefersReducedMotion
+  const titleMotion = prefersReducedMotion
     ? {}
     : {
-        initial: { opacity: 0, y: 18 },
-        animate: { opacity: 1, y: 0 },
-        transition: { duration: 0.9, delay: 0.28, ease: [0.22, 1, 0.36, 1] },
+        initial: { opacity: 0, y: -64, clipPath: "inset(0 0 100% 0)" },
+        animate: { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)" },
+        transition: { duration: 1.08, delay: 0.34, ease: [0.22, 1, 0.36, 1] },
       };
 
   return (
@@ -28,15 +27,11 @@ export function ReferenceHero() {
         {...imageMotion}
       />
       <div className="reference-hero__shade" aria-hidden="true" />
-      <motion.div className="reference-hero__content" {...copyMotion}>
-        <p className="reference-hero__script" id="reference-hero-title">
-          <span>Sweet</span>
-          {" "}
-          <span>Hearts</span>
-        </p>
-        <Link className="reference-button reference-hero__button" to="/contact">
-          Inquire Now
-        </Link>
+      <h1 className="sr-only" id="reference-hero-title">
+        Sweet Hearts
+      </h1>
+      <motion.div className="reference-hero__content" {...titleMotion} aria-hidden="true">
+        <img className="reference-hero__logo" src={images.sweetheartsLogo} alt="" />
       </motion.div>
     </section>
   );

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { brand } from "../../../data/brand.js";
-import { navigationItems } from "../../../data/navigation.js";
 import { Container } from "../../common/Container/Container.jsx";
 import { Logo } from "../../common/Logo/Logo.jsx";
 
@@ -25,14 +24,6 @@ export function Footer() {
             <a href={brand.whatsapp}>WhatsApp</a>
             <a href={brand.instagram}>Instagram</a>
           </div>
-
-          <nav className="footer__nav" aria-label="Footer navigation">
-            {navigationItems.map((item) => (
-              <Link key={item.to} to={item.to}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
         </div>
       </Container>
 

@@ -4,6 +4,7 @@ import minimalFloralCake from "../assets/images/minimal-floral-cake.png";
 import engagementFloralCake from "../assets/images/engagement-floral-cake.png";
 import bespokeBotanicalCake from "../assets/images/bespoke-botanical-cake.png";
 import dessertTable from "../assets/images/dessert-table.png";
+import sweetheartsLogo from "../assets/images/sweethearts.svg";
 
 export const images = {
   heroCake,
@@ -12,4 +13,5 @@ export const images = {
   engagementFloralCake,
   bespokeBotanicalCake,
   dessertTable,
+  sweetheartsLogo,
 };
